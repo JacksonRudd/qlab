@@ -22,16 +22,12 @@ flowchart LR
 
 ## Design Goal
 
-- Ideas: Can this be entirely managed through the command line (no azure portal)
-- Can we have setup and tear down scripts for new projects
--
-
 ## TODO
 
 ## General Platform Improvements
 
-- Backend through AppService
-- Add a README for getting started.
+- Make a run local script
+- Make something that tests the service both locally and remotely
 - Web request from front end to backend
 - Add SSL
 - Add nginx
