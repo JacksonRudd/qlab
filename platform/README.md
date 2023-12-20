@@ -2,8 +2,10 @@
 
 From the root level:
 
-`docker build -t myapp -f ./platform/Dockerfile .`
+`docker build -t qlab -f ./platform/Dockerfile .`
 
-`docker run -p 5000:5000 myapp`
+`docker run -p 5000:5000 qlab`
 
-`http://localhost:5000/`
+`python .\platform\build.py`
+
+`python .\platform\deploy.py`

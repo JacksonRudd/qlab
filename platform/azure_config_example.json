@@ -1,0 +1,9 @@
+{
+  "resourceGroupName": "rg",
+  "location": "eastus",
+  "acrName": "acr",
+  "appServicePlan": "service",
+  "webAppName": "webapp",
+  "imageName": "imagename",
+  "imageTag": "imagetag"
+}

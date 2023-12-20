@@ -25,8 +25,12 @@ def check_and_create_resource(check_command, create_command, resource_name):
             print(f"Error creating {resource_name}: {create_error}")
 
 def main():
-    config = load_config('azure_config.json')
-
+    
+    try: 
+        config = load_config('platform/azure_config.json')
+    except: 
+        message = 'missing config, please make one named "platform/azure_config.json" that looks like the already existing "platform/azure_config.json"'
+        raise Exception(message)
     # Check and create a resource group
     check_and_create_resource(
         f"az group exists --name {config['resourceGroupName']}",
