@@ -21,7 +21,7 @@ This repository offers a cloneable and opinionated template, featuring a standar
 
 - **Visualization**: The following Mermaid diagram illustrates the technology stack and flow:
 
-  :::mermaid
+  ```mermaid
   flowchart LR
   subgraph Azure AppService
   subgraph DockerImage
@@ -33,7 +33,7 @@ This repository offers a cloneable and opinionated template, featuring a standar
   end
   R <--SSL--> nginx
   R <--Get front end resources--> Netlify
-  :::
+  ```
 
 ## To-Do List
 
