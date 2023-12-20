@@ -1,40 +1,55 @@
-## General Idea
+## Overview
 
-A cloneable repo with a standard python backend and React front end.
+This repository offers a cloneable and opinionated template, featuring a standard Python backend and a React frontend.
 
-## Technology Stack
+## Quick Deployment Guide
 
-:::mermaid
-flowchart LR
+### Deploy Your Backend
 
-    subgraph Azure AppService
-      subgraph DockerImage
-        nginx --> uwsgi --> flask
-      end
-    end
-    subgraph User
-      R[React App]
-    end
-    R <--SSL--> nginx
-    R <--Get front end resources--> Netlify
+- **Objective**: Deploy an application in under 10 minutes.
+- **Instructions**: Refer to the detailed steps in `platform/README.md`.
+- **Feedback Request**: Suggestions for improvements to the README are welcome.
 
-:::
+### Deploy Your Front End
 
-## Design Goal
+- **Current Setup**: Deployment through Netlify.
+- **Goal**: To generalize the front-end deployment process.
 
-## TODO
+## Technology Stack Overview
 
-## General Platform Improvements
+### Diagram Explanation
 
-- Make a run local script
-- Make something that tests the service both locally and remotely
-- Web request from front end to backend
-- Add SSL
-- Add nginx
-- Front end deployment driven by configuration
-  - Add a config file for netlify (or use an azure technology instead)
-- Back end deployment driven by configuration
-  - Add a config file for the app service the backend deploys to.
-- I don't think so, but think if it's possible to share this as a library instead of a cloneable repo.
-- Monitoring
-- Add deployment pipelines
+- **Visualization**: The following Mermaid diagram illustrates the technology stack and flow:
+
+  :::mermaid
+  flowchart LR
+  subgraph Azure AppService
+  subgraph DockerImage
+  nginx --> uwsgi --> flask
+  end
+  end
+  subgraph User
+  R[React App]
+  end
+  R <--SSL--> nginx
+  R <--Get front end resources--> Netlify
+  :::
+
+## To-Do List
+
+- **Front End Deployment**:
+  - Generalize the process.
+  - Create a configuration file for Netlify or explore Azure alternatives.
+- **Local Development**:
+  - Develop a script for running the service locally.
+- **Testing**:
+  - Implement tests for the service, both locally and remotely.
+- **Integration**:
+  - Establish web requests from the front end to the backend.
+- **Security and Optimization**:
+  - Add SSL encryption.
+  - Integrate nginx.
+- **Monitoring**:
+  - Implement monitoring solutions.
+- **Deployment Pipelines**:
+  - Develop automated deployment pipelines.
