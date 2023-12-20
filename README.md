@@ -7,7 +7,7 @@ This repository offers a cloneable and opinionated template, featuring a standar
 ### Deploy Your Backend
 
 - **Objective**: Deploy an application in under 10 minutes.
-- **Instructions**: Refer to the detailed steps in `platform/README.md`.
+- **Instructions**: Refer to the detailed steps in [platform/README.md ](platform/README.md).
 - **Feedback Request**: Suggestions for improvements to the README are welcome.
 
 ### Deploy Your Front End
