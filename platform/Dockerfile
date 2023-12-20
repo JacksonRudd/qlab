@@ -23,8 +23,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./backend/app ./
 COPY ./backend/uwsgi.ini ./
 
-# Make port 5000 available to the world outside this container
-EXPOSE 5000
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
 
 # Run the app with uWSGI
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
