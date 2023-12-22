@@ -2,6 +2,7 @@ import json
 import subprocess
 
 def run_command(command):
+    print("|",command)
     """Run a shell command and return its output, error, and exit code."""
     process = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     return process.returncode, process.stdout.strip(), process.stderr.strip()
@@ -14,6 +15,7 @@ def load_config(file_path):
 def check_and_create_resource(check_command, create_command, resource_name):
     """Check if a given Azure resource exists, and create it if it does not, with detailed logging."""
     code, _, _ = run_command(check_command)
+    print("code", code, _, _)
     if code == 0:
         print(f"{resource_name} already exists.")
     else:

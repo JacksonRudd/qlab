@@ -14,6 +14,7 @@
 3. **Select Azure Subscription**:
    - Choose the Azure subscription you intend to use.
 4. **Run Setup Script**:
+   - Create a Resource Group TODO: (we need to fix the script to do this on it's own. )
    - Execute the script with the command: `python .\platform\setup_azure.py`.
    - This script is idempotent; it won't recreate existing resources.
 
