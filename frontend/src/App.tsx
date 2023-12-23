@@ -14,9 +14,9 @@ interface QuestionData {
 function App() {
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
   const [useranswer, setUserAnswer] = useState<string | null>(null);
-
+  let topic = "airplanes";
   useEffect(() => {
-    fetchData("http://localhost:8080/question")("")
+    fetchData("http://localhost:8080/question/" + topic)("")
       .then((data) => {
         setQuestionData(data);
       })
@@ -25,6 +25,7 @@ function App() {
 
   const handleSubmit = (answer: string) => {
     setUserAnswer(answer);
+    fetchData("http://localhost:8080/explanation/<useranswer>");
   };
 
   return (
@@ -40,8 +41,7 @@ function App() {
 
       {useranswer && (
         <Answer
-          useranswer={useranswer}
-          explanation={"Your answer is wrong"}
+          explanation={"Moscow is indeed the captial of Russia"}
           isCorrect={true}
         ></Answer>
       )}
