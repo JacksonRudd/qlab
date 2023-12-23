@@ -33,4 +33,4 @@ From the root directory of your project:
 1. **Build the Docker Image**:
    - Use the command: `docker build -t qlab -f ./platform/Dockerfile .`.
 2. **Run the Docker Container**:
-   - Start your application with: `docker run -p 8080:8080 <imagename>:<imagetag>`.
+   - Start your application with: `docker run -p 8080:8080 qlab`.
