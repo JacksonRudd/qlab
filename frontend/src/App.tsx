@@ -7,16 +7,36 @@ import { fetchData } from "./providers/api";
 import Answer from "./components/Answer";
 
 interface QuestionData {
-  title: string;
   content: string;
 }
+
+const get_question = (topic: string) =>
+  fetchData("http://localhost:8080/question/" + topic)("");
+
+interface Explanation {
+  explanation: string;
+  is_correct: boolean;
+}
+
+const get_explanation = async (
+  question: string,
+  user_answer: string
+): Promise<Explanation> => {
+  return {
+    is_correct: true,
+    explanation: `You answered ${user_answer}, and that is correct for all kinds of reasons to the question ${question}.`,
+  };
+};
 
 function App() {
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
   const [useranswer, setUserAnswer] = useState<string | null>(null);
+  const [explanation, setExplanation] = useState<string | null>(null);
+  const [isUserCorrect, setCorrect] = useState<boolean | null>(null);
+
   let topic = "airplanes";
   useEffect(() => {
-    fetchData("http://localhost:8080/question/" + topic)("")
+    get_question(topic)
       .then((data) => {
         setQuestionData(data);
       })
@@ -25,7 +45,15 @@ function App() {
 
   const handleSubmit = (answer: string) => {
     setUserAnswer(answer);
-    fetchData("http://localhost:8080/explanation/<useranswer>");
+    if (questionData) {
+      // Get the explanation
+      get_explanation(questionData?.content, answer).then(
+        (data: Explanation) => {
+          setCorrect(data.is_correct);
+          setExplanation(data.explanation);
+        }
+      );
+    }
   };
 
   return (
@@ -39,11 +67,8 @@ function App() {
         />
       )}
 
-      {useranswer && (
-        <Answer
-          explanation={"Moscow is indeed the captial of Russia"}
-          isCorrect={true}
-        ></Answer>
+      {explanation && isUserCorrect && (
+        <Answer explanation={explanation} isCorrect={isUserCorrect}></Answer>
       )}
     </>
   );

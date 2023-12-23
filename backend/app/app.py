@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -16,11 +16,25 @@ def question(topic):
     # You can use the 'topic' parameter in your function
     return {'content': f'Question about {topic}'}
 
-# Route for 'answer' with an 'answer' parameter
-@app.route('/explanation/<useranswer>')
-def answer(useranswer):
-    # You can use the 'answer' parameter in your function
-    return {'is_correct':True , 'explanation': f'You answered {useranswer}, and that it correct for all kinds of reasons. '}
+
+
+# Route for 'answer' using POST method
+@app.route('/explanation', methods=['POST'])
+def answer():
+    # Extract 'question' and 'useranswer' from request body
+    data = request.json
+    question = data.get('question')
+    useranswer = data.get('useranswer')
+
+    # You can now use 'question' and 'useranswer' in your function
+    # Logic to determine if the answer is correct
+    is_correct = True  # This is just an example, implement your logic here
+
+    return {'is_correct': is_correct, 'explanation': f'You answered {useranswer}, and that is correct for all kinds of reasons to the question {question}.'}
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080, debug=True)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
