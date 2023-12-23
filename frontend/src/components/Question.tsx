@@ -3,11 +3,16 @@ import React, { useState } from "react";
 interface QuestionProps {
   title: string;
   content: string;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  processUserAnswer: (answer: string) => void;
 }
 
-function Question({ title, content, handleSubmit }: QuestionProps) {
+function Question({ title, content, processUserAnswer }: QuestionProps) {
   const [answer, setAnswer] = useState("");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // This will prevent the default form submission behavior
+    processUserAnswer(answer);
+  };
 
   return (
     <div className="container my-4">

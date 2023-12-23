@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Question from "./components/Quiz";
+import Question from "./components/Question";
 import { fetchData } from "./providers/api";
 import Answer from "./components/Answer";
 
@@ -13,6 +13,7 @@ interface QuestionData {
 
 function App() {
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
+  const [useranswer, setUserAnswer] = useState<string | null>(null);
 
   useEffect(() => {
     fetchData("http://localhost:8080/question")("")
@@ -22,10 +23,8 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Handle the submission logic here
-    console.log("Submitted Answer:", event);
+  const handleSubmit = (answer: string) => {
+    setUserAnswer(answer);
   };
 
   return (
@@ -35,14 +34,17 @@ function App() {
         <Question
           title={"Question"}
           content={questionData.content}
-          handleSubmit={handleSubmit}
+          processUserAnswer={handleSubmit}
         />
       )}
-      <Answer
-        useranswer={"My answer"}
-        explanation={"Your answer is wrong"}
-        isCorrect={true}
-      ></Answer>
+
+      {useranswer && (
+        <Answer
+          useranswer={useranswer}
+          explanation={"Your answer is wrong"}
+          isCorrect={true}
+        ></Answer>
+      )}
     </>
   );
 }
