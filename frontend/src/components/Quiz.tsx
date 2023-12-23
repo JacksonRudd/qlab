@@ -29,9 +29,9 @@ function Quiz({ get_question, get_explanation }: QuizProps) {
 
   const handleSubmit = (answer: string) => {
     setUserAnswer(answer);
-    if (questionData) {
+    if (questionData && useranswer) {
       // Get the explanation
-      get_explanation(questionData?.content, answer).then(
+      get_explanation(questionData?.content, useranswer).then(
         (data: Explanation) => {
           setCorrect(data.is_correct);
           setExplanation(data.explanation);
