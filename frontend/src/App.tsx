@@ -7,11 +7,17 @@ import getProviders from "./providers/axios_provider";
 import Question from "./components/Question";
 
 const url = "http://localhost:8080";
-const { sendAnswer, fetchQuestion } = getProviders(url);
 
-function App() {
+interface AppParams {
+  url: string;
+}
+
+function App({ url }: AppParams) {
+  const { sendAnswer, fetchQuestion } = getProviders(url);
+
   const [topic, setTopic] = useState<string | null>(null);
 
+  // Check the Url for the topc
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const topicFromURL = urlParams.get("topic");
