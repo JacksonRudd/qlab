@@ -3,6 +3,7 @@ import json
 # TODO: Consolidate some of these run_command type functions 
 def run_command(command):
     """Run a shell command and return its output."""
+    print('>>', command)
     process = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if process.returncode != 0:
         print(f"Error: {process.stderr.strip()}")
@@ -21,7 +22,8 @@ def main():
     print('Building docker')
     local_image_tag = f"{config['imageName']}:{config['imageTag']}"
     print(local_image_tag)
-    run_command(f"docker build -t {local_image_tag} -f ./platform/Dockerfile .")
+    command = f"docker build -t {local_image_tag} -f ./platform/Dockerfile ."
+    run_command(command)
 
     # Step 1: Tag the local Docker image for ACR
     acr_login_server = run_command(f"az acr list --resource-group {config['resourceGroupName']} --query \"[0].loginServer\" --output tsv")
