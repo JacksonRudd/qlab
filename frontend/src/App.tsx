@@ -6,8 +6,6 @@ import Quiz from "./components/Quiz";
 import getProviders from "./providers/axios_provider";
 import Question from "./components/Question";
 
-const url = "http://localhost:8080";
-
 interface AppParams {
   url: string;
 }
