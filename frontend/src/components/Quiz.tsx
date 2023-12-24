@@ -5,17 +5,14 @@ import Question from "./Question";
 import Answer from "./Answer";
 import SideBar from "./Sidebar";
 import { AnsweredQuestionsParams } from "./AnsweredQuestionsParams";
+import { IQuizProvider } from "../providers/IProvider";
 
 interface QuizProps {
   topic: string;
-  get_question: (topic: string) => Promise<QuestionData>;
-  get_explanation: (
-    question: string,
-    user_answer: string
-  ) => Promise<Explanation>;
+  provider: IQuizProvider;
 }
 
-function Quiz({ get_question, get_explanation, topic }: QuizProps) {
+function Quiz({ provider, topic }: QuizProps) {
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
   const [explanation, setExplanation] = useState<string | null>(null);
   const [isUserCorrect, setCorrect] = useState<boolean | null>(null);
@@ -26,7 +23,11 @@ function Quiz({ get_question, get_explanation, topic }: QuizProps) {
   const get_next_question = () => {
     setLoadingQuestion(true);
     setQuestionData(null);
-    get_question(topic)
+    provider
+      .getQuestion(
+        topic,
+        history.map((item) => item.question)
+      )
       .then((data) => {
         setQuestionData(data);
       })
@@ -44,13 +45,12 @@ function Quiz({ get_question, get_explanation, topic }: QuizProps) {
   const handleSubmit = (answer: string) => {
     setLoadingAnswer(true);
     if (questionData && questionData.content) {
-      get_explanation(questionData.content, answer).then(
-        (data: Explanation) => {
+      provider
+        .getExplanation(questionData.content, answer)
+        .then((data: Explanation) => {
           setCorrect(data.is_correct);
           setExplanation(data.explanation);
           setLoadingAnswer(false);
-          // Update history with the new question and answer
-
           setHistory((prevHistory) => {
             const newEntry: AnsweredQuestionsParams = {
               question: questionData.content,
@@ -59,8 +59,7 @@ function Quiz({ get_question, get_explanation, topic }: QuizProps) {
             };
             return [...prevHistory, newEntry];
           });
-        }
-      );
+        });
     }
   };
 

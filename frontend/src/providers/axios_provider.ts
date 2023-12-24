@@ -1,9 +1,10 @@
 import { Explanation } from "../Explanation";
 import axios, { AxiosResponse } from "axios";
 import { QuestionData } from "../QuestionData";
+import { IQuizProvider } from "./IProvider";
 
 // Define the function as an arrow function with proper parameter types and return type.
-const getProviders = (url: string) => {
+const getProviders = (url: string): IQuizProvider => {
   // Define the functions inside the getProviders function.
   // This ensures they have access to the 'url' parameter.
 
@@ -29,12 +30,16 @@ const getProviders = (url: string) => {
   }
 
   // Function to fetch a question.
-  async function fetchQuestion(topic: string): Promise<QuestionData> {
+  async function fetchQuestion(
+    topic: string,
+    previousQuestions: string[]
+  ): Promise<QuestionData> {
     try {
-      const response: AxiosResponse = await axios.get(
-        `${url}/question/${topic}`
-      );
-      console.log(`${url}/question/${topic}`);
+      const response: AxiosResponse = await axios.post(`${url}/question`, {
+        topic: topic,
+        previous_questions: previousQuestions,
+      });
+      console.log(`POST request sent to ${url}/question with topic: ${topic}`);
       return { content: response.data.content };
     } catch (error) {
       // Handle error here if needed.
@@ -44,8 +49,8 @@ const getProviders = (url: string) => {
 
   // Export the functions.
   return {
-    sendAnswer,
-    fetchQuestion,
+    getExplanation: sendAnswer,
+    getQuestion: fetchQuestion,
   };
 };
 

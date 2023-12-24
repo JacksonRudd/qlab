@@ -29,13 +29,19 @@ def home():
     return 'Hello, World!'
 
 # Route for 'question' with a 'topic' parameter
-@app.route('/question/<topic>')
-def question(topic):
-    prompt = f'''
-    You are a bot designed to come up with Questions to test the user's knowledge about this topic: {topic}.
-    You have already generated about five questions. Please come up wit another question.
-    Please just state the question without any other greetings or follow ups.  
-    '''
+
+@app.route('/question', methods=['POST'])
+def question():
+    # Extract data from POST request
+    data = request.get_json()
+    topic = data.get('topic')
+    previous_questions = data.get('previous_questions')
+
+    questions = '\n'.join(['-' + question for question in previous_questions])
+
+    prompt= f'''As a knowledge-testing bot, your task is to formulate questions related to a specified topic: {topic}. You have a list of previously generated questions: \n{questions}\nYour goal is to create an additional question that expands the user's understanding of the topic. Remember, focus solely on the question without any additional greetings or follow-up comments. Also, ensure that the question does not pertain to recent events or timely information, such as the latest coach of a sports team, to avoid issues with outdated data.'''
+
+    print(prompt)
     chat_completion = client.chat.completions.create(
             messages=[
                 {
@@ -59,7 +65,7 @@ def answer():
             messages = [
               {
                   "role": "system",
-                  "content": "Your job is to grade the student's answers to questions. When you respond, please first reply with either 'CORRECT' or 'INCORRECT' to indicate if the student's answer is correct or incorrect, and then explain why."
+                  "content": """Your job is to grade the student's answers to questions. When you respond, please first reply with either 'CORRECT' or 'INCORRECT' to indicate if the student's answer is correct or incorrect, and then explain why. You should go easy on spelling mistakes and instead test for underlying comprehension. """
               },
               {
                   "role": "user",

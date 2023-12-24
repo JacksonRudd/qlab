@@ -11,8 +11,6 @@ interface AppParams {
 }
 
 function App({ url }: AppParams) {
-  const { sendAnswer, fetchQuestion } = getProviders(url);
-
   const [topic, setTopic] = useState<string | null>(null);
 
   // Check the Url for the topc
@@ -41,13 +39,7 @@ function App({ url }: AppParams) {
           processUserAnswer={updateTopic}
         />
       )}
-      {topic && (
-        <Quiz
-          get_question={fetchQuestion}
-          get_explanation={sendAnswer}
-          topic={topic}
-        />
-      )}
+      {topic && <Quiz provider={getProviders(url)} topic={topic} />}
     </>
   );
 }
