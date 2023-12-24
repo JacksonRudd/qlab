@@ -1,55 +1,27 @@
-## Overview
+## Quiz App
 
-This repository offers a cloneable and opinionated template, featuring a standard Python backend and a React frontend.
+## To Do
 
-## Quick Deployment Guide
+## Architecture
 
-### Deploy Your Backend
+- Better config management for python and javascript
+- add back in mocks for javascript
+- Is my pattern for providers correct?
+- Get feedback from an actual front end person
 
-- **Objective**: Deploy an application in under 10 minutes.
-- **Instructions**: Refer to the detailed steps in [platform/README.md ](platform/README.md).
-- **Feedback Request**: Suggestions for improvements to the README are welcome.
+## AI
 
-### Deploy Your Front End
+- de duplicate the questions
+- add pictures for the questions
 
-- **Current Setup**: Deployment through Netlify.
-- **Goal**: To generalize the front-end deployment process.
+## History
 
-## Technology Stack Overview
+- Give a list of previously answered questions
+- Make the test end and begin
+- Make a list of previously taken tests
 
-### Diagram Explanation
+## Visual Details
 
-- **Visualization**: The following Mermaid diagram illustrates the technology stack and flow:
-
-  ```mermaid
-  flowchart LR
-  subgraph Azure AppService
-  subgraph DockerImage
-  nginx --> uwsgi --> flask
-  end
-  end
-  subgraph User
-  R[React App]
-  end
-  R <--SSL--> nginx
-  R <--Get front end resources--> Netlify
-  ```
-
-## To-Do List
-
-- **Front End Deployment**:
-  - Generalize the process.
-  - Create a configuration file for Netlify or explore Azure alternatives.
-- **Local Development**:
-  - Develop a script for running the service locally.
-- **Testing**:
-  - Implement tests for the service, both locally and remotely.
-- **Integration**:
-  - Establish web requests from the front end to the backend.
-- **Security and Optimization**:
-  - Add SSL encryption.
-  - Integrate nginx.
-- **Monitoring**:
-  - Implement monitoring solutions.
-- **Deployment Pipelines**:
-  - Develop automated deployment pipelines.
+- Add emojis to the topics and reformat them
+- give the site a more interesting theme
+- larger font
