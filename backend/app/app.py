@@ -5,6 +5,8 @@ from openai import OpenAI
 import os
 import json
 
+from qlab.business_logic import answer
+
 app = Flask(__name__)
 # Get the current directory of the script
 current_directory = os.path.dirname(os.path.abspath(__file__))
@@ -55,46 +57,21 @@ def question():
 
 # Route for 'answer' using POST method
 @app.route('/explanation', methods=['POST'])
-def answer():
+def explanation():
     # Extract 'question' and 'useranswer' from request body
     data = request.json
     question = data.get('question')
     useranswer = data.get('useranswer')
-
-    chat_completion = client.chat.completions.create(
-            messages = [
-              {
-                  "role": "system",
-                  "content": """Your job is to grade the student's answers to questions. When you respond, please first reply with either 'CORRECT' or 'INCORRECT' to indicate if the student's answer is correct or incorrect, and then explain why. You should go easy on spelling mistakes and instead test for underlying comprehension. """
-              },
-              {
-                  "role": "user",
-                  "content": "QUESTION:\nWho won the World Series in 2020?\nANSWER:\nThe Los Angeles Dodgers"
-              },
-              {
-                  "role": "assistant",
-                  "content": "CORRECT\nThe Los Angeles Dodgers won the World Series in 2020. They defeated the Tampa Bay Rays in a six-game series to capture their first World Series championship since 1988."
-              },
-              {
-                  "role": "user",
-                  "content": "QUESTION:\nWhat is the capital of France?\nANSWER:\nThe capital of France is Paris."
-              },
-              {
-                  "role": "assistant",
-                  "content": "CORRECT\nThe capital of France is indeed Paris. It is known for its iconic landmarks such as the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral."
-              },
-
-              {
-                  "role": "user",
-                  "content": f"QUESTION:\n{question}\nANSWER:{useranswer}"
-              },
-          ],
-            model="gpt-3.5-turbo",
-        )
-    answer = chat_completion.choices[0].message.content
-    is_correct = not ('INCORRECT' in answer)
-    explanation = answer.replace('INCORRECT', '').replace("CORRECT", '').lstrip('\n')
+    ai_answer = ""
+    # It should either say 'CORRECT' or 'INCORRECT'
+    while "CORRECT" not in ai_answer:
+        ai_answer = answer(question, useranswer, client)
+    is_correct = not ('INCORRECT' in ai_answer)
+    explanation = ai_answer.replace('INCORRECT', '').replace("CORRECT", '').lstrip('\n')
     return jsonify({'is_correct': is_correct, 'explanation': explanation})
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
+
+
+
