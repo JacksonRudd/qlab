@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Quiz from "./components/Quiz";
 import getProviders from "./providers/axios_provider";
-import { useState } from "react";
 import Question from "./components/Question";
 
 const url = "http://localhost:8080";
@@ -12,6 +12,21 @@ const { sendAnswer, fetchQuestion } = getProviders(url);
 function App() {
   const [topic, setTopic] = useState<string | null>(null);
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const topicFromURL = urlParams.get("topic");
+    if (topicFromURL) {
+      setTopic(topicFromURL);
+    }
+  }, []);
+
+  const updateTopic = (newTopic: string) => {
+    setTopic(newTopic);
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("topic", newTopic);
+    window.history.pushState(null, "", "?" + queryParams.toString());
+  };
+
   return (
     <>
       <Navbar />
@@ -19,8 +34,8 @@ function App() {
         <Question
           title={"Choose your topic."}
           content={"Put any topic you want to be tested on."}
-          processUserAnswer={setTopic}
-        ></Question>
+          processUserAnswer={updateTopic}
+        />
       )}
       {topic && (
         <Quiz

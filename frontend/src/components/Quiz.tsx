@@ -57,7 +57,7 @@ function Quiz({ get_question, get_explanation, topic }: QuizProps) {
       {isLoadingQuestion && <h1>Loading... </h1>}
       {questionData && (
         <Question
-          title={"Question"}
+          title={topic}
           content={questionData.content}
           processUserAnswer={handleSubmit}
         />
