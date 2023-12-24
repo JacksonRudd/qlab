@@ -86,7 +86,7 @@ def answer():
             model="gpt-3.5-turbo",
         )
     answer = chat_completion.choices[0].message.content
-    is_correct = 'INCORRECT' in answer
+    is_correct = not ('INCORRECT' in answer)
     explanation = answer.replace('INCORRECT', '').replace("CORRECT", '').lstrip('\n')
     return jsonify({'is_correct': is_correct, 'explanation': explanation})
     
