@@ -6,7 +6,7 @@ import Quiz from "./components/Quiz";
 import getProviders from "./providers/axios_provider";
 import Question from "./components/Question";
 
-const url = "https://qlwebapp.azurewebsites.net/";
+const url = "http://localhost:8080";
 const { sendAnswer, fetchQuestion } = getProviders(url);
 
 function App() {
