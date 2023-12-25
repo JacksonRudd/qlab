@@ -1,7 +1,5 @@
 def answer(useranswer, question, client):
-    
-    chat_completion = client.chat.completions.create(
-            messages = [
+    messages = [
               {
                   "role": "system",
                   "content": """Your job is to grade the student's answers to questions. When you respond, please first reply with either 'CORRECT' or 'INCORRECT' to indicate if the student's answer is correct or incorrect, and then explain why. You should go easy on spelling mistakes and instead test for underlying comprehension. """
@@ -26,8 +24,11 @@ def answer(useranswer, question, client):
               {
                   "role": "user",
                   "content": f"QUESTION:\n{question}\nANSWER:{useranswer}"
-              },
-          ],
+              }
+    ]
+    chat_completion = client.chat.completions.create(
+          messages= messages,
             model="gpt-3.5-turbo",
         )
+    
     return chat_completion.choices[0].message.content

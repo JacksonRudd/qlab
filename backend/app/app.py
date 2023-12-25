@@ -65,7 +65,7 @@ def explanation():
     ai_answer = ""
     # It should either say 'CORRECT' or 'INCORRECT'
     while "CORRECT" not in ai_answer:
-        ai_answer = answer(question, useranswer, client)
+        ai_answer = answer( useranswer, question, client)
     is_correct = not ('INCORRECT' in ai_answer)
     explanation = ai_answer.replace('INCORRECT', '').replace("CORRECT", '').lstrip('\n')
     return jsonify({'is_correct': is_correct, 'explanation': explanation})
