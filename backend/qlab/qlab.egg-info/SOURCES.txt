@@ -1,8 +1,0 @@
-README.md
-setup.py
-qlab/__init__.py
-qlab/business_logic.py
-qlab.egg-info/PKG-INFO
-qlab.egg-info/SOURCES.txt
-qlab.egg-info/dependency_links.txt
-qlab.egg-info/top_level.txt
