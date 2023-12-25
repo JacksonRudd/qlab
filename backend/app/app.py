@@ -41,7 +41,7 @@ def question():
 
     questions = '\n'.join(['-' + question for question in previous_questions])
 
-    prompt= f'''As a knowledge-testing bot, your task is to formulate questions related to a specified topic: {topic}. You have a list of previously generated questions: \n{questions}\nYour goal is to create an additional question that expands the user's understanding of the topic. Remember, focus solely on the question without any additional greetings or follow-up comments. Also, ensure that the question does not pertain to recent events or timely information, such as the latest coach of a sports team, to avoid issues with outdated data.'''
+    prompt= f'''As a knowledge-testing bot, your task is to formulate questions related to a specified topic: {topic}. You have a list of previously generated questions: \n{questions}\nYour goal is to create an additional question that expands the user's understanding of the topic. Remember, focus solely on the question without any additional greetings or follow-up comments. Also, ensure that the question does not pertain to recent events or timely information, such as the latest coach of a sports team, to avoid issues with outdated data. Try to be creative and cover a large range of content.'''
 
     print(prompt)
     chat_completion = client.chat.completions.create(
@@ -51,7 +51,7 @@ def question():
                     "content": prompt,
                 }
             ],
-            model="gpt-3.5-turbo",
+            model="gpt-4-1106-preview",
         )
     return {'content' :chat_completion.choices[0].message.content}
 
