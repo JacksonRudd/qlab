@@ -56,6 +56,7 @@ function Quiz({ provider, topic }: QuizProps) {
               question: questionData.content,
               answer: answer,
               is_correct: data.is_correct,
+              ai_answer: data.explanation
             };
             return [...prevHistory, newEntry];
           });
