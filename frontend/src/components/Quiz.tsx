@@ -10,9 +10,8 @@ import { IQuizProvider } from "../providers/IProvider";
 interface QuizProps {
   topic: string;
   provider: IQuizProvider;
-  mode: 'party' | 'scholar';
+  mode: "party" | "scholar";
 }
-
 
 function Quiz({ provider, topic, mode }: QuizProps) {
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
@@ -24,7 +23,6 @@ function Quiz({ provider, topic, mode }: QuizProps) {
 
   const get_next_question = () => {
     setLoadingQuestion(true);
-    setQuestionData(null);
     provider
       .getQuestion(
         topic,
@@ -59,7 +57,7 @@ function Quiz({ provider, topic, mode }: QuizProps) {
               question: questionData.content,
               answer: answer,
               is_correct: data.is_correct,
-              ai_answer: data.explanation
+              ai_answer: data.explanation,
             };
             return [...prevHistory, newEntry];
           });
@@ -83,6 +81,7 @@ function Quiz({ provider, topic, mode }: QuizProps) {
               title={topic}
               content={questionData.content}
               processUserAnswer={handleSubmit}
+              mode={mode}
             />
           )}
           {isLoadingAnswer && <div className="loading-icon">Loading...</div>}

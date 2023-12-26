@@ -12,7 +12,7 @@ interface AppParams {
 
 function App({ url }: AppParams) {
   const [topic, setTopic] = useState<string | null>(null);
-  const [mode, setMode] = useState<"party" | "scholar" | null>(null);
+  const [mode, setMode] = useState<"party" | "scholar">("party");
 
   // Check the Url for the topc
   useEffect(() => {
@@ -39,11 +39,13 @@ function App({ url }: AppParams) {
   return (
     <>
       <Navbar />
+      {/* {hack for input, change later} */}
       {topic == null && (
         <Question
           title={"Choose your topic."}
           content={"Put any topic you want to be tested on."}
           processUserAnswer={updateTopic}
+          mode={mode}
         />
       )}
       {topic && mode && (

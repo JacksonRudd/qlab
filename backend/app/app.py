@@ -34,7 +34,7 @@ def question():
     # Extract data from POST request
     data = request.get_json()
     topic = data.get('topic')
-    mode = data.get('mode', 'scholar')
+    mode = data.get('mode', 'party')
     previous_questions = data.get('previous_questions')
     question = generate_question(topic, mode, previous_questions, client )
     return {'content' :question}
