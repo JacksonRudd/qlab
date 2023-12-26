@@ -8,6 +8,7 @@ export interface IQuizProvider {
   ) => Promise<Explanation>;
   getQuestion: (
     topic: string,
+    mode: string,
     previousQuestions: string[]
   ) => Promise<QuestionData>;
 }

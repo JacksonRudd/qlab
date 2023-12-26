@@ -12,13 +12,20 @@ interface AppParams {
 
 function App({ url }: AppParams) {
   const [topic, setTopic] = useState<string | null>(null);
+  const [mode, setMode] = useState<"party" | "scholar" | null>(null);
 
   // Check the Url for the topc
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const topicFromURL = urlParams.get("topic");
+    const modeFromUrl = window.location.pathname.replace(/^\//, "");
     if (topicFromURL) {
       setTopic(topicFromURL);
+    }
+    if (modeFromUrl === "party" || modeFromUrl === "scholar") {
+      setMode(modeFromUrl);
+    } else {
+      setMode("party");
     }
   }, []);
 
@@ -39,7 +46,9 @@ function App({ url }: AppParams) {
           processUserAnswer={updateTopic}
         />
       )}
-      {topic && <Quiz provider={getProviders(url)} topic={topic} />}
+      {topic && mode && (
+        <Quiz provider={getProviders(url)} topic={topic} mode={mode} />
+      )}
     </>
   );
 }

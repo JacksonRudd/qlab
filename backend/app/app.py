@@ -5,7 +5,7 @@ from openai import OpenAI
 import os
 import json
 
-from qlab.business_logic import answer
+from qlab.business_logic import answer, generate_question
 
 app = Flask(__name__)
 # Get the current directory of the script
@@ -23,9 +23,6 @@ with open(config_file_path, 'r') as config_file:
 # Enable CORS for all routes and origins
 CORS(app)
 
-
-
-
 @app.route('/')
 def home():
     return 'Hello, World!'
@@ -37,23 +34,10 @@ def question():
     # Extract data from POST request
     data = request.get_json()
     topic = data.get('topic')
+    mode = data.get('mode', 'scholar')
     previous_questions = data.get('previous_questions')
-
-    questions = '\n'.join(['-' + question for question in previous_questions])
-
-    prompt= f'''As a knowledge-testing bot, your task is to formulate questions related to a specified topic: {topic}. You have a list of previously generated questions: \n{questions}\nYour goal is to create an additional question that expands the user's understanding of the topic. Remember, focus solely on the question without any additional greetings or follow-up comments. Also, ensure that the question does not pertain to recent events or timely information, such as the latest coach of a sports team, to avoid issues with outdated data. Try to be creative and cover a large range of content.'''
-
-    print(prompt)
-    chat_completion = client.chat.completions.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                }
-            ],
-            model="gpt-4-1106-preview",
-        )
-    return {'content' :chat_completion.choices[0].message.content}
+    question = generate_question(topic, mode, previous_questions, client )
+    return {'content' :question}
 
 # Route for 'answer' using POST method
 @app.route('/explanation', methods=['POST'])

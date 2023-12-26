@@ -32,11 +32,14 @@ const getProviders = (url: string): IQuizProvider => {
   // Function to fetch a question.
   async function fetchQuestion(
     topic: string,
+    mode: string,
     previousQuestions: string[]
   ): Promise<QuestionData> {
     try {
+      console.log(mode);
       const response: AxiosResponse = await axios.post(`${url}/question`, {
         topic: topic,
+        mode: mode,
         previous_questions: previousQuestions,
       });
       console.log(`POST request sent to ${url}/question with topic: ${topic}`);

@@ -10,9 +10,11 @@ import { IQuizProvider } from "../providers/IProvider";
 interface QuizProps {
   topic: string;
   provider: IQuizProvider;
+  mode: 'party' | 'scholar';
 }
 
-function Quiz({ provider, topic }: QuizProps) {
+
+function Quiz({ provider, topic, mode }: QuizProps) {
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
   const [explanation, setExplanation] = useState<string | null>(null);
   const [isUserCorrect, setCorrect] = useState<boolean | null>(null);
@@ -26,6 +28,7 @@ function Quiz({ provider, topic }: QuizProps) {
     provider
       .getQuestion(
         topic,
+        mode,
         history.map((item) => item.question)
       )
       .then((data) => {
