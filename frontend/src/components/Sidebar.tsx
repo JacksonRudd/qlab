@@ -12,7 +12,7 @@ function SideBar({ answeredQuestions }: SideBarProps) {
   return (
     <div className="col-md-4">
       {answeredQuestions.length > 0 && (
-        <h3>Percent Correct: {percentageTrue}%</h3>
+        <h3>Percent Correct: {Math.round(percentageTrue)}%</h3>
       )}
       <div className="history-sidebar sticky-top">
         {answeredQuestions.reverse().map((item, index) => (

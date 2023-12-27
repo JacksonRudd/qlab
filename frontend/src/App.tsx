@@ -41,12 +41,16 @@ function App({ url }: AppParams) {
       <Navbar />
       {/* {hack for input, change later} */}
       {topic == null && (
-        <Question
-          title={"Choose your topic."}
-          content={"Put any topic you want to be tested on."}
-          processUserAnswer={updateTopic}
-          mode={mode}
-        />
+        <>
+          <h1>{mode === "scholar" ? "🧠" : "🎉"}</h1>
+
+          <Question
+            title={"Choose your topic."}
+            content={"Put any topic you want to be tested on."}
+            processUserAnswer={updateTopic}
+            mode={mode}
+          />
+        </>
       )}
       {topic && mode && (
         <Quiz provider={getProviders(url)} topic={topic} mode={mode} />

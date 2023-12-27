@@ -31,12 +31,11 @@ function Quiz({ provider, topic, mode }: QuizProps) {
       )
       .then((data) => {
         setQuestionData(data);
+        setLoadingQuestion(false);
       })
       .catch((error) => console.error("Error fetching data:", error));
     setCorrect(null);
-    setLoadingAnswer(false);
     setExplanation(null);
-    setLoadingQuestion(false);
   };
 
   useEffect(() => {
@@ -67,42 +66,47 @@ function Quiz({ provider, topic, mode }: QuizProps) {
 
   return (
     <div className="container-fluid">
-      {" "}
       {/* Use Bootstrap container */}
       <div className="row">
-        {" "}
         {/* Bootstrap row to define a new line */}
         <div className="col-md-8">
-          {" "}
+          <h1>{mode === "scholar" ? "🧠" : "🎉"}</h1>
+
           {/* Main content area */}
-          {isLoadingQuestion && <h1>Loading... </h1>}
-          {questionData && (
-            <Question
-              title={topic}
-              content={questionData.content}
-              processUserAnswer={handleSubmit}
-              mode={mode}
-            />
-          )}
-          {isLoadingAnswer && <div className="loading-icon">Loading...</div>}
-          {explanation != null && isUserCorrect != null && (
+          {isLoadingQuestion ? (
+            <h1>Loading...</h1>
+          ) : (
             <>
-              <Answer
-                explanation={explanation}
-                isCorrect={isUserCorrect}
-              ></Answer>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={get_next_question}
-              >
-                Next
-              </button>
+              {questionData && (
+                <Question
+                  title={topic}
+                  content={questionData.content}
+                  processUserAnswer={handleSubmit}
+                  mode={mode}
+                />
+              )}
+              {isLoadingAnswer && (
+                <div className="loading-icon">Loading...</div>
+              )}
+              {explanation != null && isUserCorrect != null && (
+                <>
+                  <Answer
+                    explanation={explanation}
+                    isCorrect={isUserCorrect}
+                  ></Answer>
+                  <button
+                    type="submit"
+                    className={`btn btn-primary`}
+                    onClick={get_next_question}
+                  >
+                    Next
+                  </button>
+                </>
+              )}
             </>
           )}
         </div>
-        {/* Bootstrap column for sidebar */}
-        <SideBar answeredQuestions={history} />
+        {<SideBar answeredQuestions={history} />}
       </div>
     </div>
   );
