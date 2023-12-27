@@ -15,6 +15,9 @@ interface QuizProps {
 
 function Quiz({ provider, topic, mode }: QuizProps) {
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
+  const [nextQuestionData, setNextQuestionData] = useState<QuestionData | null>(
+    null
+  );
   const [explanation, setExplanation] = useState<string | null>(null);
   const [isUserCorrect, setCorrect] = useState<boolean | null>(null);
   const [isLoadingAnswer, setLoadingAnswer] = useState(false);
@@ -22,6 +25,33 @@ function Quiz({ provider, topic, mode }: QuizProps) {
   const [history, setHistory] = useState<Array<AnsweredQuestionsParams>>([]);
 
   const get_next_question = () => {
+    console.log("get_next_question");
+    setCorrect(null);
+    setExplanation(null);
+    if (nextQuestionData == null) {
+      setQuestionData(null);
+      get_question_when_both_null();
+    }
+    setQuestionData(nextQuestionData);
+    setNextQuestionData(null);
+    fetch_next_question();
+  };
+
+  const fetch_next_question = () => {
+    console.log("fetch_next_question");
+    let questions = history.map((item) => item.question);
+    if (questionData) {
+      questions.push(questionData.content);
+    }
+    provider
+      .getQuestion(topic, mode, questions)
+      .then((data) => {
+        setNextQuestionData(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  };
+  const get_question_when_both_null = () => {
+    console.log("get_question_when_both_null");
     setLoadingQuestion(true);
     provider
       .getQuestion(
@@ -30,7 +60,11 @@ function Quiz({ provider, topic, mode }: QuizProps) {
         history.map((item) => item.question)
       )
       .then((data) => {
-        setQuestionData(data);
+        if (questionData == null) {
+          // if not null this must have been called twice and we are on the second invocation
+          setQuestionData(data);
+          fetch_next_question();
+        }
         setLoadingQuestion(false);
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -39,7 +73,7 @@ function Quiz({ provider, topic, mode }: QuizProps) {
   };
 
   useEffect(() => {
-    get_next_question();
+    get_question_when_both_null();
   }, []);
 
   const handleSubmit = (answer: string) => {
