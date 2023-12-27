@@ -23,6 +23,7 @@ def generate_question(topic, mode, previous_questions, client):
     ]
 
     if mode == 'party':
+        things_to_remember.append('Be concise, write at most three sentances and less if possible')
         things_to_remember.append('Generate questions that require short answers since this is a party! The questions should all be answerable in a sentance. :)')
     
     prompt = prompt_start + f'\nPlease remember:\n{to_bullet_points(things_to_remember)}'
