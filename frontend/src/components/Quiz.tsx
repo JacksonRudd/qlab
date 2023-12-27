@@ -76,26 +76,40 @@ function Quiz({ provider, topic, mode }: QuizProps) {
     get_question_when_both_null();
   }, []);
 
-  const handleSubmit = (answer: string) => {
+  const handleSubmit = (answer: string, retryCount = 3) => {
     setLoadingAnswer(true);
-    if (questionData && questionData.content) {
-      provider
-        .getExplanation(questionData.content, answer)
-        .then((data: Explanation) => {
-          setCorrect(data.is_correct);
-          setExplanation(data.explanation);
-          setLoadingAnswer(false);
-          setHistory((prevHistory) => {
-            const newEntry: AnsweredQuestionsParams = {
-              question: questionData.content,
-              answer: answer,
-              is_correct: data.is_correct,
-              ai_answer: data.explanation,
-            };
-            return [...prevHistory, newEntry];
+
+    const sendRequest = () => {
+      if (questionData && questionData.content) {
+        provider
+          .getExplanation(questionData.content, answer)
+          .then((data: Explanation) => {
+            setCorrect(data.is_correct);
+            setExplanation(data.explanation);
+            setLoadingAnswer(false);
+            setHistory((prevHistory) => {
+              const newEntry: AnsweredQuestionsParams = {
+                question: questionData.content,
+                answer: answer,
+                is_correct: data.is_correct,
+                ai_answer: data.explanation,
+              };
+              return [...prevHistory, newEntry];
+            });
+          })
+          .catch((error) => {
+            if (retryCount > 0) {
+              console.log(`Retrying... Attempts left: ${retryCount - 1}`);
+              handleSubmit(answer, retryCount - 1);
+            } else {
+              console.error("Failed after several retries: ", error);
+              setLoadingAnswer(false);
+            }
           });
-        });
-    }
+      }
+    };
+
+    sendRequest();
   };
 
   return (
