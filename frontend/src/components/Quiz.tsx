@@ -28,16 +28,12 @@ function Quiz({ provider, topic, mode }: QuizProps) {
     console.log("get_next_question");
     setCorrect(null);
     setExplanation(null);
-    if (nextQuestionData == null) {
-      setQuestionData(null);
-      get_question_when_both_null();
-    }
+
     setQuestionData(nextQuestionData);
     setNextQuestionData(null);
-    fetch_next_question();
   };
 
-  const fetch_next_question = () => {
+  const fetch_question = (setFunction: (arg0: QuestionData) => void) => {
     console.log("fetch_next_question");
     let questions = history.map((item) => item.question);
     if (questionData) {
@@ -46,35 +42,20 @@ function Quiz({ provider, topic, mode }: QuizProps) {
     provider
       .getQuestion(topic, mode, questions)
       .then((data) => {
-        setNextQuestionData(data);
+        setFunction(data);
       })
       .catch((error) => console.error("Error fetching data:", error));
-  };
-  const get_question_when_both_null = () => {
-    console.log("get_question_when_both_null");
-    setLoadingQuestion(true);
-    provider
-      .getQuestion(
-        topic,
-        mode,
-        history.map((item) => item.question)
-      )
-      .then((data) => {
-        if (questionData == null) {
-          // if not null this must have been called twice and we are on the second invocation
-          setQuestionData(data);
-          fetch_next_question();
-        }
-        setLoadingQuestion(false);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-    setCorrect(null);
-    setExplanation(null);
   };
 
   useEffect(() => {
-    get_question_when_both_null();
-  }, []);
+    if (questionData == null && nextQuestionData == null) {
+      fetch_question(setQuestionData);
+      return;
+    }
+    if (nextQuestionData == null) {
+      fetch_question(setNextQuestionData);
+    }
+  }, [questionData, nextQuestionData]);
 
   const handleSubmit = (answer: string, retryCount = 3) => {
     setLoadingAnswer(true);
