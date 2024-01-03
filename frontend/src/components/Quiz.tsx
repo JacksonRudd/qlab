@@ -21,7 +21,7 @@ function Quiz({ provider, topic, mode }: QuizProps) {
   const [explanation, setExplanation] = useState<string | null>(null);
   const [isUserCorrect, setCorrect] = useState<boolean | null>(null);
   const [isLoadingAnswer, setLoadingAnswer] = useState(false);
-  const [isLoadingQuestion] = useState(false);
+  const [isLoadingQuestion, setLoadingQuestion] = useState(true);
   const [history, setHistory] = useState<Array<AnsweredQuestionsParams>>([]);
 
   const get_next_question = () => {
@@ -48,12 +48,18 @@ function Quiz({ provider, topic, mode }: QuizProps) {
   };
 
   useEffect(() => {
+    if (questionData == null) {
+      setLoadingQuestion(true);
+    } else {
+      setLoadingQuestion(false);
+    }
     if (questionData == null && nextQuestionData == null) {
       fetch_question(setQuestionData);
       return;
     }
     if (nextQuestionData == null) {
       fetch_question(setNextQuestionData);
+      return;
     }
   }, [questionData, nextQuestionData]);
 
