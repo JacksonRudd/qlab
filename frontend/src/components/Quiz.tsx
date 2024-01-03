@@ -21,7 +21,7 @@ function Quiz({ provider, topic, mode }: QuizProps) {
   const [explanation, setExplanation] = useState<string | null>(null);
   const [isUserCorrect, setCorrect] = useState<boolean | null>(null);
   const [isLoadingAnswer, setLoadingAnswer] = useState(false);
-  const [isLoadingQuestion, setLoadingQuestion] = useState(false);
+  const [isLoadingQuestion] = useState(false);
   const [history, setHistory] = useState<Array<AnsweredQuestionsParams>>([]);
 
   const get_next_question = () => {
