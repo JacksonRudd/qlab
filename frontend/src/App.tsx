@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import "./App.css";
 import Navbar from "./components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 import Quiz from "./components/Quiz";
 import getProviders from "./providers/axios_provider";
 import Question from "./components/Question";
@@ -42,8 +42,6 @@ function App({ url }: AppParams) {
       {/* {hack for input, change later} */}
       {topic == null && (
         <>
-          <h1>{mode === "scholar" ? "🧠" : "🎉"}</h1>
-
           <Question
             title={"Choose your topic."}
             content={"Put any topic you want to be tested on."}

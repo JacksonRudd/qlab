@@ -4,20 +4,38 @@
   padding: 2rem;
   text-align: center;
 }
+/* General styles */
+body {
+  background-color: #000000; /* Black background */
+  color: #00ff00; /* Green text for the terminal look */
+  font-family: "Courier New", monospace; /* Monospaced font for the entire body */
+}
 
+/* Root container */
+#root {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Logo styles */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Logo animation */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +51,73 @@
   }
 }
 
+/* Card styles */
 .card {
   padding: 2em;
+  background-color: #1c1c1c; /* Dark background for cards */
+  color: #00ff00; /* Green text for cards */
+  border: 1px solid #333; /* Slight border for definition */
 }
 
+/* Link styles */
 .read-the-docs {
-  color: #888;
+  color: #4c4; /* Lighter green for links */
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: #222; /* Dark background for buttons */
+  color: #00ff00; /* Green text for buttons */
+  border: 1px solid #00ff00;
+}
+
+.btn-primary:hover {
+  background-color: #333; /* Slightly lighter background on hover */
+}
+
+/* Navbar styles */
+.navbar {
+  background-color: #222; /* Dark background for the navbar */
+  border-bottom: 3px solid #333; /* Slight border for definition */
+}
+
+.navbar-brand {
+  color: #00ff00; /* Green text for brand name */
+  font-weight: bold;
+  padding: 5px;
+}
+
+.navbar-brand:hover {
+  color: #4c4; /* Lighter green on hover */
+}
+
+/* Footer styles */
+.footer {
+  background-color: #222; /* Dark background for the footer */
+  color: #00ff00; /* Green text for the footer */
+  padding: 10px;
+  text-align: center;
+}
+
+input[type="text"],
+textarea {
+  background-color: #222; /* Dark background for text boxes */
+  color: #00ff00; /* Green text for input */
+  border: 1px solid #00ff00; /* Green border */
+  padding: 0.5em;
+  font-family: "Courier New", monospace; /* Monospaced font for input text */
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #4c4; /* Light green for placeholder text */
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  background-color: #222; /* Maintain dark background on focus */
+  color: #00ff00; /* Maintain green text color on focus */
+  border-color: #4c4; /* Light green border on focus */
+  box-shadow: 0 0 0.5em #4c4; /* Glow effect on focus */
 }

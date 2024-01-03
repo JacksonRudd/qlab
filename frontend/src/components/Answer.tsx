@@ -5,22 +5,26 @@ interface AnswerParams {
 
 function Answer({ explanation, isCorrect }: AnswerParams) {
   const headingStyle = {
-    color: isCorrect ? "green" : "red",
+    color: isCorrect ? "#00FF00" : "red", // Green for correct, red for incorrect
     fontSize: "1.5em",
     fontWeight: "bold",
+    fontFamily: "Courier New, monospace", // Monospaced font
   };
 
   const explanationStyle = {
+    color: "#00FF00", // Green text for explanation
     fontSize: "1em",
     lineHeight: "1.5",
     marginTop: "10px",
+    fontFamily: "Courier New, monospace", // Monospaced font
   };
 
   const containerStyle = {
     padding: "10px",
     borderRadius: "5px",
-    backgroundColor: "#f3f3f3",
-    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#000000", // Black background for container
+    boxShadow: "0px 2px 4px rgba(0, 255, 0, 0.4)", // Slight green glow for shadow
+    border: "1px solid #00FF00", // Green border for the container
   };
 
   return (

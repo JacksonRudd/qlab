@@ -99,8 +99,6 @@ function Quiz({ provider, topic, mode }: QuizProps) {
       <div className="row">
         {/* Bootstrap row to define a new line */}
         <div className="col-md-8">
-          <h1>{mode === "scholar" ? "🧠" : "🎉"}</h1>
-
           {/* Main content area */}
           {isLoadingQuestion ? (
             <h1>Loading...</h1>
